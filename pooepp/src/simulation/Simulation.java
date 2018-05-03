@@ -34,5 +34,8 @@ public class Simulation {
 		} catch (ParserConfigurationException e) {
 			System.err.println("Parser configuration error");
 		}
+		System.out.println(grid);
+		System.out.println("" + finalinst + pop + maxpop + comfortsens + paramDeath + paramRep + paramMove);
 	}
+	
 }
