@@ -9,6 +9,7 @@ public class XmlParser extends DefaultHandler {
 	Simulation sim;
 	String currTag;
 	int cini, rini, cfin, rfin;
+	float timestamp;
 
 	public XmlParser(String _fileName, Simulation sim) {
 		fileName = _fileName;
@@ -20,6 +21,25 @@ public class XmlParser extends DefaultHandler {
 	}
 
 	public void endDocument() {
+		for(int i = 0; i < sim.pop; i++) {
+			Individual ind = new Individual(sim.grid.pGrid[sim.grid.cini][sim.grid.rini]);
+			sim.indAlive.add(ind);
+			ind.calcComfort();
+			timestamp = ind.calcTimeStamp(sim.paramDeath);
+			if(timestamp <= sim.finalinst) {
+				sim.pec.addEvPEC(ind, "death", timestamp);
+				ind.deathtime = timestamp;
+			}
+			timestamp = ind.calcTimeStamp(sim.paramMove);
+			if(timestamp <= sim.finalinst && timestamp < ind.deathtime)
+				sim.pec.addEvPEC(ind, "move", timestamp);
+			timestamp = ind.calcTimeStamp(sim.paramRep);
+			if(timestamp <= sim.finalinst && timestamp < ind.deathtime)
+				sim.pec.addEvPEC(ind, "reproduction", timestamp);
+			
+				
+			
+		}
 		System.out.println("Parsing concluded");
 	}
 

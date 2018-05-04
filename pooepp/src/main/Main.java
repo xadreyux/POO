@@ -1,6 +1,7 @@
 package main;
 
 import simulation.Simulation;
+import pec.PEC;
 
 public class Main {
 
@@ -18,7 +19,9 @@ public class Main {
 			System.exit(0);
 		}
 		
-		Simulation simulation = new Simulation(fileName);
+		PEC pec = new PEC();
+		Simulation simulation = new Simulation(fileName, pec);
+		
 		
 
 	}

@@ -1,7 +1,10 @@
 package simulation;
 
+import pec.PEC;
+
 import java.io.File;
 import java.io.IOException;
+import java.util.LinkedList;
 
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.parsers.SAXParser;
@@ -12,10 +15,15 @@ import org.xml.sax.helpers.DefaultHandler;
 
 public class Simulation {
 	int finalinst, pop, maxpop, comfortsens, paramDeath, paramRep, paramMove;
+	int currentime = 0;
 	Grid grid;
+	PEC pec;
+	LinkedList<Individual> indAlive;
 
-	public Simulation(String fileName) {
+	public Simulation(String fileName, PEC pec) {
 		parse(fileName);
+		this.pec = pec;
+		indAlive = new LinkedList<Individual>();
 	}
 
 	public void parse(String fileName) {
@@ -38,4 +46,6 @@ public class Simulation {
 		System.out.println("" + finalinst + pop + maxpop + comfortsens + paramDeath + paramRep + paramMove);
 	}
 	
+	
+
 }

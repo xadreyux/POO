@@ -5,9 +5,9 @@ public class Point {
 	int c;
 	int[] edges;
 
-	public Point(int _c, int _r) {
-		this.r = _r;
-		this.c = _c;
+	public Point(int c, int r) {
+		this.r = r;
+		this.c = c;
 		edges = new int[4];
 	}
 
