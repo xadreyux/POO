@@ -21,9 +21,9 @@ public class Simulation {
 	LinkedList<Individual> indAlive;
 
 	public Simulation(String fileName, PEC pec) {
-		parse(fileName);
 		this.pec = pec;
 		indAlive = new LinkedList<Individual>();
+		parse(fileName);
 	}
 
 	public void parse(String fileName) {
