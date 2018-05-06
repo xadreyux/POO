@@ -9,7 +9,7 @@ public class XmlParser extends DefaultHandler {
 	Simulation sim;
 	String currTag;
 	int cini, rini, cfin, rfin;
-	float timestamp;
+	double timestamp;
 
 	public XmlParser(String _fileName, Simulation sim) {
 		fileName = _fileName;
@@ -23,8 +23,8 @@ public class XmlParser extends DefaultHandler {
 	public void endDocument() {
 		for(int i = 0; i < sim.pop; i++) {
 			Individual ind = new Individual(sim.grid.pGrid[sim.grid.cini][sim.grid.rini]);
-			sim.indAlive.add(ind);
-			ind.calcComfort();
+			sim.indAlive.addFirst(ind);
+			ind.calcComfort(sim.grid.pGrid[sim.grid.cfin][sim.grid.rfin], sim.comfortsens, sim.grid.cmax, sim.grid.ncols, sim.grid.nrows);
 			timestamp = ind.calcTimeStamp(sim.paramDeath);
 			if(timestamp <= sim.finalinst) {
 				sim.pec.addEvPEC(ind, "death", timestamp);
@@ -84,10 +84,10 @@ public class XmlParser extends DefaultHandler {
 				System.out.println(atts.getLocalName(i) + " = " + atts.getValue(i));
 
 				if (atts.getLocalName(i).equals("xinitial")) {
-					sim.grid.cini = Integer.parseInt(atts.getValue(i));
+					sim.grid.cini = Integer.parseInt(atts.getValue(i)) - 1;
 
 				} else if (atts.getLocalName(i).equals("yinitial")) {
-					sim.grid.rini = Integer.parseInt(atts.getValue(i));
+					sim.grid.rini = Integer.parseInt(atts.getValue(i)) - 1;
 				}
 			}
 		} else if (tag.equals("finalpoint")) {
@@ -95,10 +95,10 @@ public class XmlParser extends DefaultHandler {
 				System.out.println(atts.getLocalName(i) + " = " + atts.getValue(i));
 
 				if (atts.getLocalName(i).equals("xfinal")) {
-					sim.grid.cfin = Integer.parseInt(atts.getValue(i));
+					sim.grid.cfin = Integer.parseInt(atts.getValue(i)) - 1;
 
 				} else if (atts.getLocalName(i).equals("yfinal")) {
-					sim.grid.rfin = Integer.parseInt(atts.getValue(i));
+					sim.grid.rfin = Integer.parseInt(atts.getValue(i)) - 1;
 				}
 			}
 		} else if (tag.equals("specialcostzones")) {

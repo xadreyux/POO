@@ -5,7 +5,7 @@ public class Grid {
 
 	int ncols, nrows;
 	int cini, rini, cfin, rfin;
-	int nSCZones, nObs;
+	int nSCZones, nObs, cmax;
 
 	public Grid(int n_cols, int n_rows) {
 		pGrid = new Point[n_cols][n_rows];
@@ -24,6 +24,7 @@ public class Grid {
 					pGrid[i][j].edges[0] = 1;
 			}
 		}
+		cmax = 1;
 	}
 
 	public void addObstacle(int c, int r) {
@@ -68,6 +69,8 @@ public class Grid {
 				pGrid[c_end - 1][j].edges[0] = cost;
 			}
 		}
+		if(cost > cmax)
+			cmax = cost;
 	}
 
 	@Override

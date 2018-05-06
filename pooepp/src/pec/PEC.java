@@ -19,7 +19,7 @@ public class PEC {
 		queue = new PriorityQueue<Event>(200, comparator);
 	}
 	
-	public void addEvPEC(Individual ind, String type, float timestamp) {
+	public void addEvPEC(Individual ind, String type, double timestamp) {
 		if(type.equals("death"))
 			queue.add(new Death(ind, timestamp));
 		
