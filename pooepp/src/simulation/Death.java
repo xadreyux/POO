@@ -8,7 +8,7 @@ public class Death extends Event {
 		super(ind, timestamp);
 	}
 	
-	@Override
+	
 	public void procEvent() {
 		ind.killInd();
 	}

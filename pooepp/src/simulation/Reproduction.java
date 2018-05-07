@@ -8,7 +8,7 @@ public class Reproduction extends Event{
 		super(ind, timestamp);
 	}
 	
-	@Override
+	
 	public void procEvent() {
 		ind.repInd();
 	}

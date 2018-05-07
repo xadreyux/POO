@@ -72,6 +72,20 @@ public class Grid {
 		if(cost > cmax)
 			cmax = cost;
 	}
+	
+	public Point getNextPoint(Point curr, int dir) {
+		switch (dir) {
+		case 0:
+			return pGrid[curr.c][curr.r + 1];
+		case 1:
+			return pGrid[curr.c + 1][curr.r];
+		case 2:
+			return pGrid[curr.c][curr.r - 1];
+		case 3:
+			return pGrid[curr.c - 1][curr.r];
+		}
+		return null;
+	}
 
 	@Override
 	public String toString() {
@@ -85,3 +99,5 @@ public class Grid {
 		return ret;
 	}
 }
+
+

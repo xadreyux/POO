@@ -27,15 +27,15 @@ public class XmlParser extends DefaultHandler {
 			ind.calcComfort(sim.grid.pGrid[sim.grid.cfin][sim.grid.rfin], sim.comfortsens, sim.grid.cmax, sim.grid.ncols, sim.grid.nrows);
 			timestamp = ind.calcTimeStamp(sim.paramDeath);
 			if(timestamp <= sim.finalinst) {
-				sim.pec.addEvPEC(ind, "death", timestamp);
+				sim.pec.addEvPEC(new Death(ind, timestamp));
 				ind.deathtime = timestamp;
 			}
 			timestamp = ind.calcTimeStamp(sim.paramMove);
 			if(timestamp <= sim.finalinst && timestamp < ind.deathtime)
-				sim.pec.addEvPEC(ind, "move", timestamp);
+				sim.pec.addEvPEC(new Move(ind, timestamp, sim.grid));
 			timestamp = ind.calcTimeStamp(sim.paramRep);
 			if(timestamp <= sim.finalinst && timestamp < ind.deathtime)
-				sim.pec.addEvPEC(ind, "reproduction", timestamp);
+				sim.pec.addEvPEC(new Reproduction(ind, timestamp));
 			
 				
 			

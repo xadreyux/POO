@@ -1,5 +1,8 @@
 package simulation;
 
+import java.util.LinkedList;
+import java.util.Random;
+
 public class Point {
 	int r;
 	int c;
@@ -9,6 +12,17 @@ public class Point {
 		this.r = r;
 		this.c = c;
 		edges = new int[4];
+	}
+	
+	public int getDir() {
+		Random rand = new Random();
+		LinkedList<Integer> possible_moves = new LinkedList<Integer>();
+		for (int i = 0; i < 4; i++) {
+			if (edges[i] != 0)
+				possible_moves.add(i);
+		}
+		int chosen_step = rand.nextInt(possible_moves.size());
+		return possible_moves.get(chosen_step);	
 	}
 
 	@Override

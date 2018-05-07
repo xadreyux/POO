@@ -1,21 +1,25 @@
 package simulation;
 
 import pec.Event;
+import simulation.Grid;
+
 public class Move extends Event {
 	
-	public Move(Individual ind, double timestamp) {
+	Grid grid;
+	
+	public Move(Individual ind, double timestamp, Grid grid) {
 		super(ind, timestamp);
+		this.grid = grid;
 	}
 	
-	public void procEvent(Grid grid) {
-		ind.moveInd(grid);
-	}
-
-
-	@Override
 	public void procEvent() {
-		System.out.println("Event move didnt receive a Grid");
+		Point currPoint = ind.getCurrPoint();
+		int dir = currPoint.getDir();
+		Point nextPoint = grid.getNextPoint(ind.getCurrPoint(), dir);
+		ind.updatePath(nextPoint);
 	}
+
+
 
 
 }

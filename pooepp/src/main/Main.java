@@ -22,6 +22,8 @@ public class Main {
 		PEC pec = new PEC();
 		Simulation simulation = new Simulation(fileName, pec);
 		
+		System.out.println(simulation.indAlive);
+		
 		
 
 	}

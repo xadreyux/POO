@@ -18,7 +18,7 @@ public class Simulation {
 	int currentime = 0;
 	Grid grid;
 	PEC pec;
-	LinkedList<Individual> indAlive;
+	public LinkedList<Individual> indAlive;
 
 	public Simulation(String fileName, PEC pec) {
 		this.pec = pec;
