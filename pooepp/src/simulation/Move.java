@@ -1,7 +1,6 @@
 package simulation;
 
 import pec.Event;
-import simulation.Grid;
 
 public class Move extends Event {
 	
@@ -16,7 +15,7 @@ public class Move extends Event {
 		Point currPoint = ind.getCurrPoint();
 		int dir = currPoint.getDir();
 		Point nextPoint = grid.getNextPoint(ind.getCurrPoint(), dir);
-		ind.updatePath(nextPoint);
+		ind.updatePath(currPoint, nextPoint, dir);
 	}
 
 

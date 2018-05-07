@@ -36,16 +36,17 @@ public class Individual {
 		return child;
 	}
 
-	public void updatePath(Point point) {
+	public void updatePath(Point currPoint, Point nextPoint, int dir) {
 		ListIterator<Point> iter = path.listIterator();
 
 		while(iter.hasNext()) {
-			if(iter.next().equals(point)) {
+			if(iter.next().equals(nextPoint)) {
 				path.subList(0, iter.previousIndex()).clear();
 			}
 		}
 		
-		path.addFirst(point);
+		cost += currPoint.getCost(dir);
+		path.addFirst(nextPoint);
 	}
 	
 	public Individual killInd() {
@@ -63,6 +64,7 @@ public class Individual {
 	public Point getCurrPoint() {
 		return path.peek();
 	}
+	
 	
 	@Override
 	public String toString() {
