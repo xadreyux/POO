@@ -24,12 +24,12 @@ public class Individual {
 		int length = path.size();
 		int distance = Math.abs(currpoint.c - targetpoint.c) + Math.abs(currpoint.r - targetpoint.r);
 		double left_side = 1.0 - (cost - length + 2.0) / ((cmax - 1.0) * length + 3.0);
-		double right_side = 1.0 - distance / (ncols + nrows + 0.0);
+		double right_side = 1.0 - distance / (ncols + nrows + 1.0);
 		comfort = Math.pow(left_side * right_side, comfort_sens);
 	}
 
 	public Individual repInd() {
-		int child_pathsize = (int) Math.ceil(0.9 * path.size());
+		int child_pathsize = (int) Math.ceil(0.9 * path.size())+(int)Math.round(0.1 * comfort * path.size());
 		LinkedList<Point> child_path = new LinkedList<Point>(path.subList(0, child_pathsize));
 		Individual child = new Individual(child_path.peek());
 		child.path = child_path;
