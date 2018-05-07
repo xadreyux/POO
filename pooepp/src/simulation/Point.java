@@ -24,6 +24,10 @@ public class Point {
 		int chosen_step = rand.nextInt(possible_moves.size());
 		return possible_moves.get(chosen_step);	
 	}
+	
+	public int getCost(int edge) {
+		return edges[edge];
+	}
 
 	@Override
 	public String toString() {

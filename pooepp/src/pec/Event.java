@@ -8,7 +8,6 @@ public abstract class Event {
 	public Event(Individual ind, double timestamp){
 		this.timestamp = timestamp;
 		this.ind = ind;
-
 	}
 	
 	public Event(double timestamp) {
