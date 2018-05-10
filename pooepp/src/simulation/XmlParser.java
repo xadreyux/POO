@@ -17,7 +17,6 @@ public class XmlParser extends DefaultHandler {
 	}
 
 	public void startDocument() {
-		System.out.println("Beginning the parsing of" + fileName);
 	}
 
 	public void endDocument() {
@@ -39,17 +38,17 @@ public class XmlParser extends DefaultHandler {
 				sim.pec.addEvPEC(new Reproduction(ind, timestamp));
 				
 		}
-		System.out.println("Parsing concluded");
+		for(int i = 1; i <= 20; i++) {
+			timestamp = sim.finalinst/20.0 * i;
+			sim.pec.addEvPEC(new Observation(timestamp, i));
+		}
 	}
 
 	public void startElement(String uri, String name, String tag, Attributes atts) {
 		currTag = tag;
 
-		System.out.println("Element <" + tag + "> ");
-
 		if (tag.equals("simulation")) {
 			for (int i = 0; i < atts.getLength(); i++) {
-				System.out.println(atts.getLocalName(i) + " = " + atts.getValue(i));
 
 				if (atts.getLocalName(i).equals("finalinst")) {
 					sim.finalinst = Integer.parseInt(atts.getValue(i));
@@ -67,7 +66,6 @@ public class XmlParser extends DefaultHandler {
 		} else if (tag.equals("grid")) {
 			int c = 0, r = 0;
 			for (int i = 0; i < atts.getLength(); i++) {
-				System.out.println(atts.getLocalName(i) + " = " + atts.getValue(i));
 
 				if (atts.getLocalName(i).equals("colsnb")) {
 					c = Integer.parseInt(atts.getValue(i));
@@ -80,7 +78,6 @@ public class XmlParser extends DefaultHandler {
 			sim.grid = new Grid(c, r);
 		} else if (tag.equals("initialpoint")) {
 			for (int i = 0; i < atts.getLength(); i++) {
-				System.out.println(atts.getLocalName(i) + " = " + atts.getValue(i));
 
 				if (atts.getLocalName(i).equals("xinitial")) {
 					sim.grid.cini = Integer.parseInt(atts.getValue(i)) - 1;
@@ -91,7 +88,6 @@ public class XmlParser extends DefaultHandler {
 			}
 		} else if (tag.equals("finalpoint")) {
 			for (int i = 0; i < atts.getLength(); i++) {
-				System.out.println(atts.getLocalName(i) + " = " + atts.getValue(i));
 
 				if (atts.getLocalName(i).equals("xfinal")) {
 					sim.grid.cfin = Integer.parseInt(atts.getValue(i)) - 1;
@@ -102,7 +98,6 @@ public class XmlParser extends DefaultHandler {
 			}
 		} else if (tag.equals("specialcostzones")) {
 			for (int i = 0; i < atts.getLength(); i++) {
-				System.out.println(atts.getLocalName(i) + " = " + atts.getValue(i));
 
 				if (atts.getLocalName(i).equals("num")) {
 					sim.grid.nSCZones = Integer.parseInt(atts.getValue(i));
@@ -110,7 +105,6 @@ public class XmlParser extends DefaultHandler {
 			}
 		} else if (tag.equals("zone")) {
 			for (int i = 0; i < atts.getLength(); i++) {
-				System.out.println(atts.getLocalName(i) + " = " + atts.getValue(i));
 
 				if (atts.getLocalName(i).equals("xinitial")) {
 					cini = Integer.parseInt(atts.getValue(i));
@@ -127,7 +121,6 @@ public class XmlParser extends DefaultHandler {
 			}
 		} else if (tag.equals("obstacles")) {
 			for (int i = 0; i < atts.getLength(); i++) {
-				System.out.println(atts.getLocalName(i) + " = " + atts.getValue(i));
 
 				if (atts.getLocalName(i).equals("num")) {
 					sim.grid.nObs = Integer.parseInt(atts.getValue(i));
@@ -135,7 +128,6 @@ public class XmlParser extends DefaultHandler {
 			}
 		} else if (tag.equals("obstacle")) {
 			for (int i = 0; i < atts.getLength(); i++) {
-				System.out.println(atts.getLocalName(i) + " = " + atts.getValue(i));
 
 				if (atts.getLocalName(i).equals("xpos")) {
 					cini = Integer.parseInt(atts.getValue(i));
@@ -147,7 +139,6 @@ public class XmlParser extends DefaultHandler {
 			sim.grid.addObstacle(cini, rini);
 		} else if (tag.equals("death")) {
 			for (int i = 0; i < atts.getLength(); i++) {
-				System.out.println(atts.getLocalName(i) + " = " + atts.getValue(i));
 				
 				if (atts.getLocalName(i).equals("param")) {
 					sim.paramDeath = Integer.parseInt(atts.getValue(i));
@@ -155,7 +146,6 @@ public class XmlParser extends DefaultHandler {
 			}
 		} else if (tag.equals("reproduction")) {
 			for (int i = 0; i < atts.getLength(); i++) {
-				System.out.println(atts.getLocalName(i) + " = " + atts.getValue(i));
 				
 				if (atts.getLocalName(i).equals("param")) {
 					sim.paramRep = Integer.parseInt(atts.getValue(i));
@@ -163,7 +153,6 @@ public class XmlParser extends DefaultHandler {
 			}
 		} else if (tag.equals("move")) {
 			for (int i = 0; i < atts.getLength(); i++) {
-				System.out.println(atts.getLocalName(i) + " = " + atts.getValue(i));
 				
 				if (atts.getLocalName(i).equals("param")) {
 					sim.paramMove = Integer.parseInt(atts.getValue(i));
@@ -174,8 +163,6 @@ public class XmlParser extends DefaultHandler {
 	}
 
 	public void characters(char[] ch, int start, int length) {
-		System.out.println(currTag);
-		System.out.println(new String(ch, start, length));
 
 		if (currTag.equals("zone")) {
 			int cost = Integer.parseInt(new String(ch, start, length));

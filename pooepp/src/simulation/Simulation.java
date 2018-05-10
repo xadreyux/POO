@@ -5,7 +5,11 @@ import pec.Event;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.LinkedList;
+import java.util.ListIterator;
+import java.util.Random;
 
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.parsers.SAXParser;
@@ -16,11 +20,19 @@ import org.xml.sax.helpers.DefaultHandler;
 
 public class Simulation {
 	int finalinst, pop, maxpop, comfortsens, paramDeath, paramRep, paramMove;
+	int nEv = 0;
 	double currentime;
 	Grid grid;
 	PEC pec;
-	public LinkedList<Individual> indAlive;
-	public BestPath bestPath;
+	LinkedList<Individual> indAlive;
+	BestPath bestPath;
+	Comparator<Individual> comparator;
+	
+	/**
+	 * 
+	 * @param fileName 
+	 * @param pec
+	 */
 
 	public Simulation(String fileName, PEC pec) {
 		this.pec = pec;
@@ -28,6 +40,7 @@ public class Simulation {
 		currentime = 0.0;
 		parse(fileName);
 		bestPath = new BestPath(grid.getDest(), indAlive.peek());
+		comparator = new ConfComparator();
 	}
 
 	public void parse(String fileName) {
@@ -46,70 +59,54 @@ public class Simulation {
 		} catch (ParserConfigurationException e) {
 			System.err.println("Parser configuration error");
 		}
-		System.out.println(grid);
-		System.out.println("" + finalinst + pop + maxpop + comfortsens + paramDeath + paramRep + paramMove);
 	}
 
 	public void runSimulation() {
 		while (true) {
 			Event curEv;
-			double timestamp;
-			Individual ind;
-
+			
 			curEv = pec.popEv();
-
+			
 			if (curEv == null) {
-				System.out.println("End of Simulation");
+				System.out.println("Path of the best fit individual = "+bestPath);
 				return;
 			}
-
-			currentime = curEv.getTime();
-			ind = curEv.procEvent();
-
-			if (curEv instanceof Move) {
-				ind.calcComfort(grid.getDest(), comfortsens, grid.getCmax(), grid.getncols(), grid.getnrows());
-				timestamp = ind.calcTimeStamp(paramMove);
-				if (currentime + timestamp <= finalinst && currentime + timestamp < ind.getDeathTime())
-					pec.addEvPEC(new Move(ind, currentime + timestamp, grid));
-				bestPath.update(ind);
-				
-				System.out.println(ind);
-			} 
-			else if (curEv instanceof Reproduction) {
-				Individual curInd;
-				curInd = curEv.getInd();
-
-				timestamp = curInd.calcTimeStamp(paramRep);
-				if (currentime + timestamp <= finalinst && currentime + timestamp < ind.getDeathTime())
-					pec.addEvPEC(new Reproduction(curInd, currentime + timestamp));
-
-				ind.calcComfort(grid.getDest(), comfortsens, grid.getCmax(), grid.getncols(), grid.getnrows());
-
-				timestamp = ind.calcTimeStamp(paramDeath);
-				if (currentime + timestamp <= finalinst) {
-					pec.addEvPEC(new Death(ind, currentime + timestamp));
-				}
-
-				ind.deathtime = currentime + timestamp;
-
-				timestamp = ind.calcTimeStamp(paramMove);
-				if (currentime + timestamp <= finalinst && currentime + timestamp < ind.deathtime)
-					pec.addEvPEC(new Move(ind, currentime + timestamp, grid));
-
-				timestamp = ind.calcTimeStamp(paramRep);
-				if (currentime + timestamp <= finalinst && currentime + timestamp < ind.deathtime)
-					pec.addEvPEC(new Reproduction(ind, currentime + timestamp));
-
-				indAlive.addFirst(ind);
-			} 
-			else if (curEv instanceof Death) {
-				indAlive.remove(ind);
-			}
 			
+			currentime = curEv.getTime();
+			curEv.procEvent(this);
+
+			if(pop > maxpop)
+				indAlive = Epidemy(indAlive);
 			
 
 		}
 	}
+	
+	public LinkedList<Individual> Epidemy(LinkedList<Individual> indAlive) {
+		Individual survivor;
+		LinkedList<Individual> survList=new LinkedList<Individual>();
+		Random rand = new Random();
+		
+		for(int n=0; n<5;n++)
+		{
+			survivor=Collections.max(indAlive, comparator);
+			survList.add(survivor);
+			indAlive.remove(survivor);
+		}
+		for(int i = 0; i < indAlive.size(); i++){
+			double aux = rand.nextDouble();
+			Individual ind = indAlive.get(i);
+			if(aux < ind.getComfort())
+				survList.add(ind);
+			else
+				indAlive.get(i).killInd();
+		}
+			
+		indAlive.clear();
+		pop = survList.size();
+		return survList;
+	}
+	
 	
 
 }

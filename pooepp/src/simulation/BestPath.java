@@ -44,8 +44,24 @@ public class BestPath {
 		}
 	}
 	
+	public String beenHit() {
+		if(finalized)
+			return "yes";
+		else
+			return "no";
+	}
+	
 	@Override
 	public String toString() {
-		return bestPath.toString()+"   cost= "+cost+"   comfort= "+comfort;
+	
+		String ret = "";
+		
+		for(int i = bestPath.size() - 1; i >= 0; i--) {
+			ret = ret +bestPath.get(i);
+			if(i != 0)
+				ret = ret + ", ";
+		}
+		
+		return "{"+ret+"}";
 	}
 }

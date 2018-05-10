@@ -29,7 +29,7 @@ public class Individual {
 	}
 
 	public Individual repInd() {
-		int child_pathsize = (int) Math.ceil(0.9 * path.size())+(int)Math.round(0.1 * comfort * path.size());
+		int child_pathsize = (int) Math.round(0.9 * path.size())+(int)Math.round(0.1 * comfort * path.size());
 		LinkedList<Point> child_path = new LinkedList<Point>(path.subList(path.size()-child_pathsize, path.size()));
 		Individual child = new Individual(child_path.peek());
 		child.path = child_path;
@@ -41,7 +41,6 @@ public class Individual {
 		ListIterator<Point> iter = path.listIterator();
 		
 		int isRepeated = 0;
-		System.out.println("Next: " + nextPoint);
 		while(iter.hasNext()) {
 			Point aux = iter.next();
 			if(aux == (nextPoint)) {
@@ -59,9 +58,8 @@ public class Individual {
 		
 	}
 	
-	public Individual killInd() {
+	public void killInd() {
 		isAlive = false;
-		return this;
 	}
 
 	public double calcTimeStamp(int param) {
@@ -116,6 +114,7 @@ public class Individual {
 	
 	@Override
 	public String toString() {
-		return "Path: "+Arrays.toString(path.toArray()) +"    comfort: "+comfort+"    cost: "+cost+"    inddeathtime: "+deathtime;
+		//return "Path: "+Arrays.toString(path.toArray()) +"    comfort: "+comfort+"    cost: "+cost+"    inddeathtime: "+deathtime;
+		return "inddeathtime: "+deathtime;
 	}
 }

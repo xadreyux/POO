@@ -9,9 +9,15 @@ public class Death extends Event {
 	}
 	
 	
-	public Individual procEvent() {
-		ind.killInd();
-		return ind;
+	public void procEvent(Simulation sim) {
+		if(ind.isAlive) {
+			ind.killInd();
+			sim.indAlive.remove(ind);
+			sim.pop--;
+			sim.nEv++;
+		}
+			
+		
 	}
 	
 	@Override
