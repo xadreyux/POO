@@ -2,7 +2,7 @@ package pec;
 
 import simulation.Individual;
 public abstract class Event {
-	double timestamp;
+	protected double timestamp;
 	protected Individual ind;
 	
 	public Event(Individual ind, double timestamp){
@@ -14,6 +14,14 @@ public abstract class Event {
 		this.timestamp = timestamp;
 	}
 	
-	public abstract void procEvent();
+	public double getTime() {
+		return timestamp;
+	}
+	
+	public Individual getInd() {
+		return ind;
+	}
+	
+	public abstract Individual procEvent();
 
 }

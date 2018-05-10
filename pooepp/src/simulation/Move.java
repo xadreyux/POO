@@ -1,5 +1,6 @@
 package simulation;
 
+
 import pec.Event;
 
 public class Move extends Event {
@@ -11,14 +12,22 @@ public class Move extends Event {
 		this.grid = grid;
 	}
 	
-	public void procEvent() {
+	@Override
+	public Individual procEvent() {
 		Point currPoint = ind.getCurrPoint();
 		int dir = currPoint.getDir();
-		Point nextPoint = grid.getNextPoint(ind.getCurrPoint(), dir);
-		ind.updatePath(currPoint, nextPoint, dir);
+		if(dir != -1) {
+			Point nextPoint = grid.getNextPoint(ind.getCurrPoint(), dir);
+			ind.updatePath(currPoint, nextPoint, dir);
+		}
+		
+		return ind;
 	}
-
-
+	
+	@Override
+	public String toString() {
+		return "[MOVE] t="+timestamp;
+	}
 
 
 }

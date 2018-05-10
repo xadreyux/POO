@@ -9,7 +9,13 @@ public class Death extends Event {
 	}
 	
 	
-	public void procEvent() {
+	public Individual procEvent() {
 		ind.killInd();
+		return ind;
+	}
+	
+	@Override
+	public String toString() {
+		return "[DEATH] t="+timestamp;
 	}
 }

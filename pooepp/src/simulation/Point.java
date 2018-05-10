@@ -21,6 +21,9 @@ public class Point {
 			if (edges[i] != 0)
 				possible_moves.add(i);
 		}
+		if(possible_moves.size() == 0)
+			return -1;
+		
 		int chosen_step = rand.nextInt(possible_moves.size());
 		return possible_moves.get(chosen_step);	
 	}

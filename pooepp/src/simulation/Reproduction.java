@@ -9,8 +9,15 @@ public class Reproduction extends Event{
 	}
 	
 	
-	public void procEvent() {
-		ind.repInd();
+	public Individual procEvent() {
+		Individual child;
+		child = ind.repInd();
+		return child;
+	}
+	
+	@Override
+	public String toString() {
+		return "[REPRODUCTION] t="+timestamp;
 	}
 
 }

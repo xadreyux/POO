@@ -16,4 +16,21 @@ public class PEC {
 	public void addEvPEC(Event event) {
 		queue.add(event);
 	}
+	
+	public Event popEv() {
+		if(!queue.isEmpty())
+			return queue.poll();
+		else
+			return null;
+			
+	}
+	
+	@Override
+	public String toString() {
+		String ret = "";
+		while (!queue.isEmpty())
+		  ret = ret + queue.poll();
+		return ret;
+	}
+	
 }

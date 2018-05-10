@@ -21,24 +21,23 @@ public class XmlParser extends DefaultHandler {
 	}
 
 	public void endDocument() {
+		Individual ind = null;
 		for(int i = 0; i < sim.pop; i++) {
-			Individual ind = new Individual(sim.grid.pGrid[sim.grid.cini][sim.grid.rini]);
+			ind = new Individual(sim.grid.pGrid[sim.grid.cini][sim.grid.rini]);
 			sim.indAlive.addFirst(ind);
 			ind.calcComfort(sim.grid.pGrid[sim.grid.cfin][sim.grid.rfin], sim.comfortsens, sim.grid.cmax, sim.grid.ncols, sim.grid.nrows);
 			timestamp = ind.calcTimeStamp(sim.paramDeath);
-			if(timestamp <= sim.finalinst) {
+			if(timestamp <= sim.finalinst) 
 				sim.pec.addEvPEC(new Death(ind, timestamp));
-				ind.deathtime = timestamp;
-			}
+			
+			ind.deathtime = timestamp;
 			timestamp = ind.calcTimeStamp(sim.paramMove);
 			if(timestamp <= sim.finalinst && timestamp < ind.deathtime)
 				sim.pec.addEvPEC(new Move(ind, timestamp, sim.grid));
 			timestamp = ind.calcTimeStamp(sim.paramRep);
 			if(timestamp <= sim.finalinst && timestamp < ind.deathtime)
 				sim.pec.addEvPEC(new Reproduction(ind, timestamp));
-			
 				
-			
 		}
 		System.out.println("Parsing concluded");
 	}

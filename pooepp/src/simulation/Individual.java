@@ -30,23 +30,33 @@ public class Individual {
 
 	public Individual repInd() {
 		int child_pathsize = (int) Math.ceil(0.9 * path.size())+(int)Math.round(0.1 * comfort * path.size());
-		LinkedList<Point> child_path = new LinkedList<Point>(path.subList(0, child_pathsize));
+		LinkedList<Point> child_path = new LinkedList<Point>(path.subList(path.size()-child_pathsize, path.size()));
 		Individual child = new Individual(child_path.peek());
 		child.path = child_path;
+		child.cost = child.getPathCost();
 		return child;
 	}
 
 	public void updatePath(Point currPoint, Point nextPoint, int dir) {
 		ListIterator<Point> iter = path.listIterator();
-
+		
+		int isRepeated = 0;
+		System.out.println("Next: " + nextPoint);
 		while(iter.hasNext()) {
-			if(iter.next().equals(nextPoint)) {
+			Point aux = iter.next();
+			if(aux == (nextPoint)) {
 				path.subList(0, iter.previousIndex()).clear();
+				isRepeated = 1;
+				break;
 			}
 		}
+		if(isRepeated == 0) {
+			cost += currPoint.getCost(dir);
+			path.addFirst(nextPoint);
+		}
+		else
+			cost = getPathCost();
 		
-		cost += currPoint.getCost(dir);
-		path.addFirst(nextPoint);
 	}
 	
 	public Individual killInd() {
@@ -61,13 +71,51 @@ public class Individual {
 		return -m*Math.log(1.0-rand.nextDouble());
 	}
 	
+	public int getPathCost() {
+		ListIterator<Point> iter = path.listIterator();
+		Point a = iter.next();
+		Point b;
+		int cost = 0;
+		while(iter.hasNext()) {
+			b = a;
+			a = iter.next();
+			cost += getEdgeCost(a, b);
+		}
+		return cost;
+	}
+	
+	public int getEdgeCost(Point a, Point b) {
+		if(b.c - a.c == 1)
+			return a.getCost(1);
+		else if(b.c - a.c == -1)
+			return a.getCost(3);
+		else if(b.r - a.r == 1)
+			return a.getCost(0);
+		else if(b.r - a.r == -1)
+			return a.getCost(2);
+		
+		return -1;		
+	}
+	
 	public Point getCurrPoint() {
 		return path.peek();
+	}
+	
+	public double getDeathTime() {
+		return deathtime;
+	}
+	
+	public LinkedList<Point> getPath() {
+		return path;
+	}
+	
+	public double getComfort() {
+		return comfort;
 	}
 	
 	
 	@Override
 	public String toString() {
-		return "Path: "+Arrays.toString(path.toArray()) +"    comfort: "+comfort+"    cost: "+cost+"    deathtime: "+deathtime;
+		return "Path: "+Arrays.toString(path.toArray()) +"    comfort: "+comfort+"    cost: "+cost+"    inddeathtime: "+deathtime;
 	}
 }

@@ -76,15 +76,32 @@ public class Grid {
 	public Point getNextPoint(Point curr, int dir) {
 		switch (dir) {
 		case 0:
-			return pGrid[curr.c][curr.r + 1];
-		case 1:
-			return pGrid[curr.c + 1][curr.r];
-		case 2:
-			return pGrid[curr.c][curr.r - 1];
-		case 3:
 			return pGrid[curr.c - 1][curr.r];
+		case 1:
+			return pGrid[curr.c][curr.r - 1];
+		case 2:
+			return pGrid[curr.c - 1][curr.r - 2];
+		case 3:
+			return pGrid[curr.c - 2][curr.r - 1];
 		}
 		return null;
+	}
+	
+	
+	public Point getDest() {
+		return pGrid[cfin][rfin];
+	}
+	
+	public int getCmax() {
+		return cmax;
+	}
+	
+	public int getncols() {
+		return ncols;
+	}
+	
+	public int getnrows() {
+		return nrows;
 	}
 
 	@Override
