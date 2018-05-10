@@ -5,8 +5,8 @@ import java.util.PriorityQueue;
 
 public class PEC {
 	
-	Comparator<Event> comparator;
-	PriorityQueue<Event> queue;
+	private Comparator<Event> comparator;
+	private PriorityQueue<Event> queue;
 	
 	public PEC() {
 		comparator = new TimeComparator();

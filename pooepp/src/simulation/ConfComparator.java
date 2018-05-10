@@ -2,7 +2,7 @@ package simulation;
 
 import java.util.Comparator;
 
-public class ConfComparator implements Comparator<Individual>{
+class ConfComparator implements Comparator<Individual>{
 
 	@Override
 	public int compare(Individual x, Individual y) {

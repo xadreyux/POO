@@ -3,16 +3,14 @@ package simulation;
 import org.xml.sax.*; // Generic API for SAX
 import org.xml.sax.helpers.*; // Handlers 
 
-public class XmlParser extends DefaultHandler {
+class XmlParser extends DefaultHandler {
 
-	static String fileName;
-	Simulation sim;
-	String currTag;
-	int cini, rini, cfin, rfin;
-	double timestamp;
+	private Simulation sim;
+	private String currTag;
+	private int cini, rini, cfin, rfin;
+	private double timestamp;
 
-	public XmlParser(String _fileName, Simulation sim) {
-		fileName = _fileName;
+	public XmlParser(Simulation sim) {
 		this.sim = sim;
 	}
 
@@ -22,9 +20,9 @@ public class XmlParser extends DefaultHandler {
 	public void endDocument() {
 		Individual ind = null;
 		for(int i = 0; i < sim.pop; i++) {
-			ind = new Individual(sim.grid.pGrid[sim.grid.cini][sim.grid.rini]);
+			ind = new Individual(sim.grid.getIni());
 			sim.indAlive.addFirst(ind);
-			ind.calcComfort(sim.grid.pGrid[sim.grid.cfin][sim.grid.rfin], sim.comfortsens, sim.grid.cmax, sim.grid.ncols, sim.grid.nrows);
+			ind.calcComfort(sim.grid.getDest(), sim.comfortsens, sim.grid.getCmax(), sim.grid.getncols(), sim.grid.getnrows());
 			timestamp = ind.calcTimeStamp(sim.paramDeath);
 			if(timestamp <= sim.finalinst) 
 				sim.pec.addEvPEC(new Death(ind, timestamp));

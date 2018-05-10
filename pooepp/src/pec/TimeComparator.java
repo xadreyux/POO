@@ -2,7 +2,7 @@ package pec;
 
 import java.util.Comparator;
 
-public class TimeComparator implements Comparator<Event>{
+class TimeComparator implements Comparator<Event>{
 	
 
 	@Override

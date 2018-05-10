@@ -23,6 +23,8 @@ public class Main {
 		PEC pec = new PEC();
 		Simulation simulation = new Simulation(fileName, pec);
 		simulation.runSimulation();
+		
+		return;
 
 	}
 

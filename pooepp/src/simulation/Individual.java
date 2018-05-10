@@ -1,6 +1,5 @@
 package simulation;
 
-import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.ListIterator;
 import java.util.Random;
@@ -8,9 +7,9 @@ import java.util.Random;
 public class Individual {
 	double comfort;
 	double deathtime;
-	int cost;
+	private int cost;
 	boolean isAlive;
-	LinkedList<Point> path;
+	private LinkedList<Point> path;
 
 	public Individual(Point birthpoint) {
 		path = new LinkedList<Point>();

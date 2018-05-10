@@ -8,7 +8,6 @@ import java.io.IOException;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.LinkedList;
-import java.util.ListIterator;
 import java.util.Random;
 
 import javax.xml.parsers.ParserConfigurationException;
@@ -26,7 +25,7 @@ public class Simulation {
 	PEC pec;
 	LinkedList<Individual> indAlive;
 	BestPath bestPath;
-	Comparator<Individual> comparator;
+	private Comparator<Individual> comparator;
 	
 	/**
 	 * 
@@ -43,14 +42,14 @@ public class Simulation {
 		comparator = new ConfComparator();
 	}
 
-	public void parse(String fileName) {
+	private void parse(String fileName) {
 		// builds the SAX parser
 		SAXParserFactory fact = SAXParserFactory.newInstance();
-		fact.setValidating(false);
+		fact.setValidating(true);
 
 		try {
 			SAXParser saxParser = fact.newSAXParser();
-			DefaultHandler handler = new XmlParser(fileName, this);
+			DefaultHandler handler = new XmlParser(this);
 			saxParser.parse(new File(fileName), handler);
 		} catch (IOException e) {
 			System.err.println("IO error");
@@ -82,7 +81,7 @@ public class Simulation {
 		}
 	}
 	
-	public LinkedList<Individual> Epidemy(LinkedList<Individual> indAlive) {
+	private LinkedList<Individual> Epidemy(LinkedList<Individual> indAlive) {
 		Individual survivor;
 		LinkedList<Individual> survList=new LinkedList<Individual>();
 		Random rand = new Random();

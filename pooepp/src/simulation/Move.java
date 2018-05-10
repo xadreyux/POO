@@ -3,9 +3,9 @@ package simulation;
 
 import pec.Event;
 
-public class Move extends Event {
+class Move extends Event {
 	
-	Grid grid;
+	private Grid grid;
 	
 	public Move(Individual ind, double timestamp, Grid grid) {
 		super(ind, timestamp);

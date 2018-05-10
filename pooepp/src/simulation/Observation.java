@@ -2,11 +2,14 @@ package simulation;
 
 import pec.Event;
 
-public class Observation extends Event{
+class Observation extends Event{
+	
+	private int n;
 	
 	public Observation(double timestamp, int n)
 	{
-		super(timestamp, n);
+		super(timestamp);
+		this.n = n;
 	}
 
 	@Override

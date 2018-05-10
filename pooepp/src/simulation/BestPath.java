@@ -2,13 +2,13 @@ package simulation;
 
 import java.util.LinkedList;
 
-public class BestPath {
+class BestPath {
 	
-	public LinkedList<Point> bestPath;
+	private LinkedList<Point> bestPath;
 	int cost;
 	double comfort;
 	boolean finalized;
-	Point dest;
+	private Point dest;
 	
 	public BestPath(Point dest, Individual ind) {
 		bestPath = new LinkedList<Point>(ind.getPath());
@@ -22,7 +22,7 @@ public class BestPath {
 		
 	}
 	
-	public void update(Individual ind) {
+	void update(Individual ind) {
 		
 		if(finalized && ind.getCurrPoint() == dest) {
 			if(ind.getPathCost() < cost) {
@@ -44,7 +44,7 @@ public class BestPath {
 		}
 	}
 	
-	public String beenHit() {
+	String beenHit() {
 		if(finalized)
 			return "yes";
 		else

@@ -3,10 +3,10 @@ package simulation;
 import java.util.LinkedList;
 import java.util.Random;
 
-public class Point {
+class Point {
 	int r;
 	int c;
-	int[] edges;
+	private int[] edges;
 
 	public Point(int c, int r) {
 		this.r = r;
@@ -14,7 +14,7 @@ public class Point {
 		edges = new int[4];
 	}
 	
-	public int getDir() {
+	int getDir() {
 		Random rand = new Random();
 		LinkedList<Integer> possible_moves = new LinkedList<Integer>();
 		for (int i = 0; i < 4; i++) {
@@ -28,8 +28,12 @@ public class Point {
 		return possible_moves.get(chosen_step);	
 	}
 	
-	public int getCost(int edge) {
+	int getCost(int edge) {
 		return edges[edge];
+	}
+	
+	void setEdgeCost(int edge, int cost) {
+		edges[edge] = cost;
 	}
 
 	@Override
@@ -37,20 +41,4 @@ public class Point {
 		return "(" + c + "," + r + ")";
 	}
 
-	@Override
-	public boolean equals(Object point) {
-		if (point == null)
-			return false;
-		if (point == this)
-			return true;
-		if (!(point instanceof Point))
-			return false;
-		
-		Point other = (Point) point;
-
-		if (this.c == other.c && this.r == other.r)
-			return true;
-		else
-			return true;
-	}
 }
