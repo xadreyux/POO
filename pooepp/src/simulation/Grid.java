@@ -1,12 +1,53 @@
 package simulation;
-
+/**
+ * Class that contains the data structure of the map of the simulation and its information and is responsible for its initialization, this is the
+ * adding of all the obstacles and special cost zones. The map is implemented through a 2-dimensional matrix of points.
+ * 
+ *
+ */
 class Grid {
 	Point[][] pGrid;
-
-	int ncols, nrows;
-	int cini, rini, cfin, rfin;
-	int nSCZones, nObs, cmax;
-
+	/**
+	 * number of columns of the grid
+	 */
+	int ncols;
+	/**
+	 * number o rows of the grid
+	 */
+	int nrows;
+	/**
+	 * column of the initial point
+	 */
+	int cini;
+	/**
+	 * row of the initial point
+	 */
+	int rini;
+	/**
+	 * column of the final point
+	 */
+	int cfin;
+	/**
+	 * row of the final point
+	 */
+	int rfin;
+	/**
+	 * number of special cost zones
+	 */
+	int nSCZones;
+	/**
+	 * number of obstacles
+	 */
+	int nObs;
+	/**
+	 * maximum edge cost of the grid
+	 */
+	int cmax;
+	/**
+	 * Constructs a grid of size n_cols x n_rows with no obstacles and with every edge with cost 1
+	 * @param n_cols total number of columns
+	 * @param n_rows total number of rows
+	 */
 	public Grid(int n_cols, int n_rows) {
 		pGrid = new Point[n_cols][n_rows];
 		ncols = n_cols;
@@ -26,7 +67,11 @@ class Grid {
 		}
 		cmax = 1;
 	}
-
+	/**
+	 * adds an obstacle to the grid in the specified coordinates
+	 * @param c column of the obstacle
+	 * @param r row of the obstacle
+	 */
 	void addObstacle(int c, int r) {
 		int i = c - 1;
 		int j = r - 1;
@@ -47,7 +92,14 @@ class Grid {
 			pGrid[i][j + 1].setEdgeCost(2, 0);
 		}
 	}
-
+	/**
+	 * adds a special cost zone in the shape of an outline of a rectangle with oposite corners on the specified coordinates and with a specified cost
+	 * @param c_init column of the first corner
+	 * @param r_init row of the first corner
+	 * @param c_end column of the second corner
+	 * @param r_end row of the second corner
+	 * @param cost cost of the zone
+	 */
 	void addSCZone(int c_init, int r_init, int c_end, int r_end, int cost) {
 		for (int i = c_init - 1; i <= c_end - 1; i++) {
 			if (i != c_init - 1 && i != 0) {
@@ -72,7 +124,12 @@ class Grid {
 		if(cost > cmax)
 			cmax = cost;
 	}
-	
+	/**
+	 * Given a current position in the grid returns its adjacent point following the given direction
+	 * @param curr original point 
+	 * @param dir direction of the movement
+	 * @return point of destination
+	 */
 	Point getNextPoint(Point curr, int dir) {
 		switch (dir) {
 		case 0:
@@ -86,28 +143,48 @@ class Grid {
 		}
 		return null;
 	}
-	
+	/**
+	 * Returns the point at the given coordinates
+	 * @param c column
+	 * @param r row
+	 * @return point at the given coordinates
+	 */
 	Point getPoint(int c, int r) {
 		return pGrid[c - 1][r - 1];
 	}
 	
-	
+	/**
+	 * Returns the final point
+	 * @return final point
+	 */
 	Point getDest() {
 		return pGrid[cfin][rfin];
 	}
-	
+	/**
+	 * Returns the initial point
+	 * @return initial point
+	 */
 	Point getIni() {
 		return pGrid[cini][rini];
 	}
-	
+	/**
+	 * Returns the maximum edge cost of the grid
+	 * @return maximum edge cost
+	 */
 	int getCmax() {
 		return cmax;
 	}
-	
+	/**
+	 * Returns the total number of columns of the grid
+	 * @return total number of columns
+	 */
 	int getncols() {
 		return ncols;
 	}
-	
+	/**
+	 * Returns the total number of rows of the grid
+	 * @return total number of rows
+	 */
 	int getnrows() {
 		return nrows;
 	}

@@ -2,14 +2,40 @@ package simulation;
 
 import org.xml.sax.*; // Generic API for SAX
 import org.xml.sax.helpers.*; // Handlers 
-
+/**
+ * Class that extends the class DefaultHandler and is responsible for parsing the simulation's parameters from the .xml file
+ *
+ *
+ */
 class XmlParser extends DefaultHandler {
-
+	/**
+	 * simulation to be ran
+	 */
 	private Simulation sim;
+	/**
+	 * current element being parsed
+	 */
 	private String currTag;
-	private int cini, rini, cfin, rfin;
-	private double timestamp;
-
+	/**
+	 * column of obstacle or first corner of special cost zone
+	 */
+	private int cini;
+	/**
+	 * row of obstacle or first corner of special cost zone
+	 */
+	private int rini;
+	/**
+	 * column of second corner of special cost zone
+	 */
+	private int cfin;
+	/**
+	 * row of second corner of special cost zone
+	 */
+	private int rfin;
+	/**
+	 * Constructs a xml parser with the specified simulation
+	 * @param sim simulation to be parsed to
+	 */
 	public XmlParser(Simulation sim) {
 		this.sim = sim;
 	}
@@ -18,6 +44,7 @@ class XmlParser extends DefaultHandler {
 	}
 
 	public void endDocument() {
+		double timestamp;
 		Individual ind = null;
 		for(int i = 0; i < sim.pop; i++) {
 			ind = new Individual(sim.grid.getIni());

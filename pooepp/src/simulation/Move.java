@@ -2,16 +2,30 @@ package simulation;
 
 
 import pec.Event;
-
+/**
+ * Class that extends the abstract class Event and implements the Move event
+ * 
+ *
+ */
 class Move extends Event {
-	
+	/**
+	 * grid of the simulation in which the event is taking place
+	 */
 	private Grid grid;
-	
+	/**
+	 * Constructs an event of type Move with a specified individual, instant of time and grid
+	 * @param ind individual to which the event is associated
+	 * @param timestamp time of occurrence of the event
+	 * @param grid simulation's grid
+	 */
 	public Move(Individual ind, double timestamp, Grid grid) {
 		super(ind, timestamp);
 		this.grid = grid;
 	}
-	
+	/**
+	 * Generates a random direction and gets the point that it will lead to, updates the individual's path with the new point, updates the
+	 * individual's comfort and the simulations best path and generates a new Move Event, with a generated time of occurrence, and adds it to the PEC
+	 */
 	@Override
 	public void procEvent(Simulation sim) {
 		if(ind.isAlive) {

@@ -1,7 +1,11 @@
 package pec;
 
 import java.util.Comparator;
-
+/**
+ * This class implements the Comparator and is used to compare the time of occurrence of two events
+ * 
+ *
+ */
 class TimeComparator implements Comparator<Event>{
 	
 
